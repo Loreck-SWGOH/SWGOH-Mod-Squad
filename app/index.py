@@ -23,3 +23,10 @@ def index():
     return render_template('index.html',
                            avail_products=products,
                            purchase_history=purchases)
+
+@bp.route("/favicon.ico", methods=["GET"])
+def favicon():
+    """
+    Prevent 404 error from flask framework asking for favicon.ico
+    """
+    return "dummy", 200
