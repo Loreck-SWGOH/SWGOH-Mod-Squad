@@ -2,22 +2,26 @@
 <html lang="en">
 
 <head>
-  <title>Mini Amazon</title>
+  <title>SWGOH Mod Squad</title>
+  <!-- Add bootstrap classes and fontawesome icons -->
   <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> -->
+  <!-- <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/example.css') }}">
-  <style>
+  <!-- <style>
     body {
         font-family: "Lato", sans-serif;
     }
 
-    .main-head {
+   .main-head {
         height: 150px;
         background: #FFF;
     }
 
-    .sidenav {
+    nav {
         height: 100%;
         background-color: #000;
         overflow-x: hidden;
@@ -42,23 +46,30 @@
         background-color: #000 !important;
         color: #fff;
     }
-  </style>
+  </style> -->
 </head>
 
 <body>
-  <div class="sidenav">
-    {% block msg %}
-      <h1 style="color:aliceblue">Welcome to CompSci 316 Mini Amazon!</h1>
-      <div style="color: aliceblue; text-align: right; margin-bottom: 25px">
+  <nav class="navbar navbar-expand-sm bg-dark border-bottom border-body" data-bs-theme="dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{{ url_for('index.index') }}">SWGOH Mod Squad Recommender</a>
+      <ul class="navbar-nav me-auto">
+        <li><a class="nav-link" href="{{ url_for('index.index') }}"><i class="fa fa-home"></i> Home</a></li>
+        <li><a class="nav-link" href="#">Factions (drop-down)</a></li>
+        <li><a class="nav-link" href="#">Events (drop-down)</a></li>
+      </ul>
+      <ul class="navbar-nav ms-auto">
         {% if current_user.is_authenticated %}
-          Hello {{current_user.firstname}}! <a href="{{ url_for('users.logout') }}" type="button" class="btn btn-light">Log out</a>
+          <li><a class="nav-link" href="#">Hello {{current_user.firstname}}!</a></li>
+          <li><a class="nav-link" href="{{ url_for('users.logout') }}" type="button" class="btn btn-light">Log out</a></li>
         {% else %}
-          <a href="{{ url_for('users.login') }}" type="button" class="btn btn-light">Log in</a>
+          <li><a class="nav-link" href="{{ url_for('users.register') }}" type="button" class="btn btn-light"><i class="fa-solid fa-user-plus"></i> Sign Up</a></li>
+          <li><a class="nav-link" href="{{ url_for('users.login') }}" type="button" class="btn btn-light"><i class="fa-solid fa-right-to-bracket"></i> Log In</a></li>
         {% endif %}
-      </div>
-    {% endblock %}
-  </div>
-  <div class="errors">
+      </ul>
+    </div>
+  </nav> 
+  <div class="error-sec">
     {% with messages = get_flashed_messages() %}
       {% if messages %}
         <ul class=flashes>
@@ -71,7 +82,8 @@
   </div>
 
   <div class="main">
-    {% block content %}{% endblock %}
+    {% block content %}
+    {% endblock %}
   </div>
 </body>
 
