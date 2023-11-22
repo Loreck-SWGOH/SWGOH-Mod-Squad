@@ -24,6 +24,7 @@ def index():
                            avail_products=products,
                            purchase_history=purchases)
 
+
 @bp.route("/favicon.ico", methods=["GET"])
 def favicon():
     """
