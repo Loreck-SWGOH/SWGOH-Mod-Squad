@@ -19,18 +19,20 @@ class DB:
 
     """
     def __init__(self, app):
-        self.engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'],
-                                    execution_options={"isolation_level": "SERIALIZABLE"})
+        self.engine = create_engine(
+            app.config['SQLALCHEMY_DATABASE_URI'],
+            execution_options={"isolation_level": "SERIALIZABLE"})
 
     def execute(self, sqlstr, **kwargs):
         """Execute a single SQL statement sqlstr.
         If the statement is a query or a modification with a RETURNING clause,
         return the list of result tuples;
         if the statement is an UPDATE or DELETE statement without RETURNING,
-        return the rows matched by the WHERE criterion of the UPDATE or DELETE statement;
-        otherwise, return None.
+        return the rows matched by the WHERE criterion of the UPDATE or DELETE
+        statement; otherwise, return None.
         An exception will be raised for any error encountered.
-        sqlstr will be wrapped automatically in a sqlalchemy.sql.expression.TextClause.
+        sqlstr will be wrapped automatically in a
+        sqlalchemy.sql.expression.TextClause.
         You can use :param inside sqlstr and supply its value as a kwarg.  See
         https://docs.sqlalchemy.org/en/14/core/connections.html#sqlalchemy.engine.execute
         https://docs.sqlalchemy.org/en/14/core/sqlelement.html#sqlalchemy.sql.expression.text
