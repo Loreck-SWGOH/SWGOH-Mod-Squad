@@ -10,19 +10,27 @@
     {{ form.hidden_tag() }}
     <!-- {{ render_form(form) }} -->
     <div class="form-group">
-      {{ form.email.label }}
-      {{ form.email(size=32) }}
-      {% for error in form.email.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-      {% endfor %}
+      <div class="row mb-3">
+        {{ form.email.label(class_="col-sm-1 col-form-label") }}
+        <div class="col-sm-7">
+          {{ form.email(size=64, class_="form-control") }}
+          {% for error in form.email.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+          </div>
+      </div>
     </div>
 
     <div class="form-group">
-      {{ form.password.label }}
-      {{ form.password(size=32) }}
-      {% for error in form.password.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-      {% endfor %}
+      <div class="row mb-3">
+        {{ form.password.label(class_="col-sm-1 col-form-label") }}
+        <div class="col-sm-4">
+          {{ form.password(size=32, class_="form-control") }}
+          {% for error in form.password.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+        </div>
+      </div>
     </div>
 
     {{ form.submit(class_="btn btn-black") }}

@@ -37,7 +37,7 @@ class User(UserMixin):
 
     @staticmethod
     def email_exists(email):
-        """ Check for existing e-mail while trying to register """
+        """ Check for existing e-mail when registering """
         rows = app.db.execute(
             """
             SELECT email
