@@ -1,11 +1,12 @@
 from flask import render_template, redirect, url_for, flash, request
 from werkzeug.urls import url_parse
-from flask_login import login_user, logout_user, current_user
+from flask_login import login_user, logout_user, current_user, login_required
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 
 from .models.user import User
+from .models.profile import Profile
 
 
 from flask import Blueprint
@@ -101,6 +102,43 @@ def register():
             return redirect(url_for('users.login'))
 
     return render_template('register.html', title='Register', form=reg_form)
+
+
+class ProfileForm(FlaskForm):
+    """ Profile form. """
+
+    ally_code = StringField('Ally Code', validators=[DataRequired()])
+    new_password = PasswordField('Password')
+    new_password2 = PasswordField(
+        'Repeat Password',
+        validators=[DataRequired(), EqualTo('new_password')])
+    submit = SubmitField('Update Profile')
+
+
+@bp.route('/profile/<int:uid>', methods=['GET', 'POST'])
+@login_required
+def profile(uid):
+    """
+    Profile page. Reached any page while logged in.
+
+    Uses GET to allow form to be filled in. Uses POST to update profile.
+    Valid form credentials attempt to add user to database. Successful
+    registration redirects to the login page. Unsucessful registration reloads
+    the registration page.
+    """
+
+    if not current_user.is_authenticated:
+        flash("Must be logged in to update profile")
+        return redirect(url_for('index.index'))
+
+    prof_form = ProfileForm()
+    if prof_form.validate_on_submit():
+        if Profile.update(uid, prof_form.ally_code.data):
+            flash('Profile updated')
+            return redirect(url_for('users.login'))
+
+    return render_template('profile.html', title='Update Profile',
+                           form=prof_form, id=uid)
 
 
 @bp.route('/logout')

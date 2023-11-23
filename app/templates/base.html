@@ -53,7 +53,7 @@
       </ul>
       <ul class="navbar-nav ms-auto">
         {% if current_user.is_authenticated %}
-          <li><a class="nav-link" href="#">Hello {{current_user.firstname}}!</a></li>
+          <li><a class="nav-link" href="{{ url_for('users.profile', uid=current_user.id) }}" type="button" class="btn btn-light">Hello {{current_user.firstname}}!</a></li>
           <li><a class="nav-link" href="{{ url_for('users.logout') }}" type="button" class="btn btn-light">Log out</a></li>
         {% else %}
           <li><a class="nav-link" href="{{ url_for('users.register') }}" type="button" class="btn btn-light"><i class="fa-solid fa-user-plus"></i> Register</a></li>
