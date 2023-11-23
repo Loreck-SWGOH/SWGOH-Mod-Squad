@@ -56,7 +56,7 @@
           <li><a class="nav-link" href="#">Hello {{current_user.firstname}}!</a></li>
           <li><a class="nav-link" href="{{ url_for('users.logout') }}" type="button" class="btn btn-light">Log out</a></li>
         {% else %}
-          <li><a class="nav-link" href="{{ url_for('users.register') }}" type="button" class="btn btn-light"><i class="fa-solid fa-user-plus"></i> Sign Up</a></li>
+          <li><a class="nav-link" href="{{ url_for('users.register') }}" type="button" class="btn btn-light"><i class="fa-solid fa-user-plus"></i> Register</a></li>
           <li><a class="nav-link" href="{{ url_for('users.login') }}" type="button" class="btn btn-light"><i class="fa-solid fa-right-to-bracket"></i> Log In</a></li>
         {% endif %}
       </ul>

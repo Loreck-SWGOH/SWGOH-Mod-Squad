@@ -2,47 +2,73 @@
 
 {% block content %}
 
-<h1>Register</h1>
+  <h2>{{ title }}</h2>
 
-<form action="" method="post">
-  {{ form.csrf_token }}
-  {{ form.hidden_tag() }}
-  <p>
-    {{ form.firstname.label }}<br/>
-    {{ form.firstname(size=32) }}<br/>
-    {% for error in form.firstname.errors %}
-    <span style="color: red;">[{{ error }}]</span>
-    {% endfor %}
-  </p>
-  <p>
-    {{ form.lastname.label }}<br/>
-    {{ form.lastname(size=32) }}<br/>
-    {% for error in form.lastname.errors %}
-    <span style="color: red;">[{{ error }}]</span>
-    {% endfor %}
-  </p>
-  <p>
-    {{ form.email.label }} (Could be fake email address)<br/>
-    {{ form.email(size=64) }}<br/>
-    {% for error in form.email.errors %}
-    <span style="color: red;">[{{ error }}]</span>
-    {% endfor %}
-  </p>
-  <p>
-    {{ form.password.label }}<br/>
-    {{ form.password(size=32) }}<br/>
-    {% for error in form.password.errors %}
-    <span style="color: red;">[{{ error }}]</span>
-    {% endfor %}
-  </p>
-  <p>
-    {{ form.password2.label }}<br/>
-    {{ form.password2(size=32) }}<br/>
-    {% for error in form.password2.errors %}
-    <span style="color: red;">[{{ error }}]</span>
-    {% endfor %}
-  </p>
-  <p>{{ form.submit() }}</p>
-</form>
+  <form action="" method="post" novalidate>
+    {{ form.csrf_token }}
+    {{ form.hidden_tag() }}
+
+    <div class="form-group">
+      <div class="row mb-3">
+        {{ form.first_name.label(class_="col-sm-1 col-form-label") }}
+        <div class="col-sm-4">
+          {{ form.first_name(size=32, class_="form-control") }}
+          {% for error in form.first_name.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+          </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="row mb-3">
+        {{ form.last_name.label(class_="col-sm-1 col-form-label") }}
+        <div class="col-sm-4">
+          {{ form.last_name(size=32, class_="form-control") }}
+          {% for error in form.last_name.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+          </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="row mb-3">
+        {{ form.email.label(class_="col-sm-1 col-form-label") }}
+        <div class="col-sm-7">
+          {{ form.email(size=64, class_="form-control") }}
+          {% for error in form.email.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+          </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="row mb-3">
+        {{ form.password.label(class_="col-sm-1 col-form-label") }}
+        <div class="col-sm-4">
+          {{ form.password(size=32, class_="form-control") }}
+          {% for error in form.password.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+          </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="row mb-3">
+        {{ form.password2.label(class_="col-sm-1 col-form-label") }}
+        <div class="col-sm-4">
+          {{ form.password2(size=32, class_="form-control") }}
+          {% for error in form.password2.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  
+    {{ form.submit(class_="btn btn-black") }}
+  </form>
 
 {% endblock %}

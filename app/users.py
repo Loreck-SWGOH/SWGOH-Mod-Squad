@@ -15,6 +15,7 @@ bp = Blueprint('users', __name__)
 
 
 class LoginForm(FlaskForm):
+    """ Login form """
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     remember_me = BooleanField('Remember Me')
@@ -24,13 +25,15 @@ class LoginForm(FlaskForm):
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
     """
-    Login page. Reached from login button on home page (index).
+    Login page. Reached from login link on home page (index).
+
     Uses GET to allow form to be filled in. Uses POST to attempt login.
     Valid form credentials check for user in database. If user not found
     or a database error occurs, flash an error and return (redirect) to
     this page. If the user is found then reload home page. Invalid form
     credentials force the form to be reloaded.
     """
+
     if current_user.is_authenticated:
         return redirect(url_for('index.index'))
 
@@ -60,8 +63,8 @@ def login():
 class RegistrationForm(FlaskForm):
     """ Registration form. Duplicate e-mail addresses not allowed. """
 
-    firstname = StringField('First Name', validators=[DataRequired()])
-    lastname = StringField('Last Name', validators=[DataRequired()])
+    first_name = StringField('First Name', validators=[DataRequired()])
+    last_name = StringField('Last Name', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField('Repeat Password',
@@ -75,14 +78,25 @@ class RegistrationForm(FlaskForm):
 
 @bp.route('/register', methods=['GET', 'POST'])
 def register():
+    """
+    Registration page. Reached from registration link on home page (index)
+    or from login page.
+
+    Uses GET to allow form to be filled in. Uses POST to attempt registration.
+    Valid form credentials attempt to add user to database. Successful
+    registration redirects to the login page. Unsucessful registration reloads
+    the registration page.
+    """
+
     if current_user.is_authenticated:
         return redirect(url_for('index.index'))
+
     reg_form = RegistrationForm()
     if reg_form.validate_on_submit():
         if User.register(reg_form.email.data,
                          reg_form.password.data,
-                         reg_form.firstname.data,
-                         reg_form.lastname.data):
+                         reg_form.first_name.data,
+                         reg_form.last_name.data):
             flash('Congratulations, you are now a registered user!')
             return redirect(url_for('users.login'))
 
