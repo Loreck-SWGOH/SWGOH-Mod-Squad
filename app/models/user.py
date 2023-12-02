@@ -69,6 +69,40 @@ class User(UserMixin):
             return None
 
     @staticmethod
+    def is_valid_password(user_id, password):
+        rows = app.db.execute(
+            """
+            SELECT password
+            FROM Users
+            WHERE ID = :uid
+            """,
+            uid=user_id)
+        return check_password_hash(rows[0][0], password)
+
+    @staticmethod
+    def update_password(user_id, cur_password, new_password):
+        if User.is_valid_password(user_id, cur_password):
+            try:
+                rows = app.db.execute(
+                    """
+                    UPDATE Users SET password = :new_password
+                    WHERE ID = :uid
+                    RETURNING ID
+                    """,
+                    uid=user_id,
+                    new_password=generate_password_hash(new_password))
+
+                print(rows)
+                id = rows[0][0]
+                return User.get(id)
+            except Exception as e:
+                # improve error checking and reporting
+                # the following simply prints the error to the console:
+                print(str(e))
+                return None
+        return None
+
+    @staticmethod
     @login.user_loader
     def get(id):
         rows = app.db.execute(

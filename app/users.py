@@ -2,7 +2,8 @@ from flask import render_template, redirect, url_for, flash, request
 from werkzeug.urls import url_parse
 from flask_login import login_user, logout_user, current_user, login_required
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms.fields import StringField, PasswordField, BooleanField, \
+                           SubmitField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 
 from .models.user import User
@@ -70,6 +71,7 @@ class RegistrationForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField('Repeat Password',
                               validators=[DataRequired(), EqualTo('password')])
+    is_admin = BooleanField("Administrator")
     submit = SubmitField('Register')
 
     def validate_email(self, email):
@@ -104,41 +106,76 @@ def register():
     return render_template('register.html', title='Register', form=reg_form)
 
 
-class ProfileForm(FlaskForm):
-    """ Profile form. """
+class AllyCodeField(StringField):
+    def process_formdata(self, valuelist):
+        self.data = [v.replace('-', '') for v in valuelist]
+        super().process_formdata(self.data)
 
-    ally_code = StringField('Ally Code', validators=[DataRequired()])
-    new_password = PasswordField('Password')
+
+class AllyCodeForm(FlaskForm):
+    """ SWGOH profile form. """
+
+    ally_code = AllyCodeField('Ally Code', validators=[DataRequired()])
+    submit_ac = SubmitField('Update Profile')
+
+    def validate_ally_code(self, ally_code):
+        try:
+            int(ally_code.data)
+        except ValueError:
+            raise ValidationError('Only numbers and dashes allowed.')
+
+
+class PasswordForm(FlaskForm):
+    """ Change password form. """
+
+    cur_password = PasswordField("Current Password")
+    new_password = PasswordField('New Password')
     new_password2 = PasswordField(
         'Repeat Password',
         validators=[DataRequired(), EqualTo('new_password')])
-    submit = SubmitField('Update Profile')
+    submit_pwd = SubmitField('Update Password')
 
 
 @bp.route('/profile/<int:uid>', methods=['GET', 'POST'])
 @login_required
 def profile(uid):
     """
-    Profile page. Reached any page while logged in.
+    Profile page. Reached from any page while logged in.
 
+    Displays 2 forms, SWGOH profile and change password.
     Uses GET to allow form to be filled in. Uses POST to update profile.
-    Valid form credentials attempt to add user to database. Successful
-    registration redirects to the login page. Unsucessful registration reloads
-    the registration page.
+    Valid form credentials attempt to update profile of user in database.
+    Successful updating redirects to the login page. Unsucessful updates
+    or invalid form credentials reload the profile form.
     """
 
+# Is this section redundant?
     if not current_user.is_authenticated:
         flash("Must be logged in to update profile")
         return redirect(url_for('index.index'))
 
-    prof_form = ProfileForm()
-    if prof_form.validate_on_submit():
-        if Profile.update(uid, prof_form.ally_code.data):
-            flash('Profile updated')
-            return redirect(url_for('users.login'))
+    ally_code_form = AllyCodeForm()
+    password_form = PasswordForm()
+    if "submit_ac" in request.form.keys():
+        print("ally code submitted")
+        if ally_code_form.validate():
+            if Profile.update(uid, int(ally_code_form.ally_code.data)):
+                flash('Profile updated')
+                return redirect(url_for('users.login'))
+    if "submit_pwd" in request.form.keys():
+        print("password submitted")
+        if password_form.validate():
+            if User.update_password(uid, password_form.cur_password.data,
+                                    password_form.new_password.data):
+                flash("Password updated")
+                return redirect(url_for("users.login"))
+            flash("Incorrect password")
+            return redirect(url_for("users.profile", uid=uid))
+    print("GET or password not posted")
 
     return render_template('profile.html', title='Update Profile',
-                           form=prof_form, id=uid)
+                           ally_code_form=ally_code_form,
+                           password_form=password_form, id=uid)
 
 
 @bp.route('/logout')
