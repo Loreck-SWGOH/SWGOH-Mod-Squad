@@ -1,9 +1,14 @@
-\COPY Users FROM 'Users.csv' WITH DELIMITER ',' NULL '' CSV
 -- since id is auto-generated; we need the next command to adjust the counter
 -- for auto-generation so next INSERT will not clash with ids loaded above:
+\COPY Users FROM 'Users.csv' WITH DELIMITER ',' NULL '' CSV
 SELECT pg_catalog.setval('public.users_id_seq',
                          (SELECT MAX(id)+1 FROM Users),
                          false);
+
+INSERT INTO Profiles(userID, joinDate)
+VALUES
+    (0, TO_DATE('01/01/2001', 'MM/DD/YYYY')),
+    (1, TO_DATE('01/01/2001', 'MM/DD/YYYY'));
 
 \COPY Products FROM 'Products.csv' WITH DELIMITER ',' NULL '' CSV
 SELECT pg_catalog.setval('public.products_id_seq',
