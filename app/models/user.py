@@ -1,4 +1,4 @@
-from flask_login import UserMixin
+from flask_login import UserMixin, login_required
 from flask import current_app as app
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -6,16 +6,23 @@ from .. import login
 
 
 class User(UserMixin):
-    def __init__(self, id, email, firstname, lastname):
+    """
+    Interface to user database table.
+    """
+    def __init__(self, id, email, first_name, last_name):
+        """
+        Don't return password.
+        """
         self.id = id
         self.email = email
-        self.firstname = firstname
-        self.lastname = lastname
+        self.first_name = first_name
+        self.last_name = last_name
 
     @staticmethod
     def get_from_login(email, password):
         """
         Get user info when attempting to login.
+
         Return None for incorrect email or password. Raise Exception if
         more than one user is found.
         """
@@ -32,12 +39,13 @@ class User(UserMixin):
         if len(rows) > 1:
             raise Exception("Database corrupted: " + email + " not unique")
 
-        print(rows)
         return User(*(rows[0][1:]))  # Return everything but password
 
     @staticmethod
     def email_exists(email):
-        """ Check for existing e-mail when registering """
+        """
+        Check for existing e-mail when registering
+        """
         rows = app.db.execute(
             """
             SELECT email
@@ -49,6 +57,11 @@ class User(UserMixin):
 
     @staticmethod
     def register(email, password, firstname, lastname):
+        """
+        Register a user by adding them to database.
+
+        If unsuccessful, TBD.
+        """
         try:
             rows = app.db.execute(
                 """
@@ -59,8 +72,7 @@ class User(UserMixin):
                 email=email, password=generate_password_hash(password),
                 firstname=firstname, lastname=lastname)
 
-            id = rows[0][0]
-            return User.get(id)
+            return User.get(rows[0[0]])
 
         except Exception as e:
             # likely email already in use; improve error checking and reporting
@@ -69,7 +81,10 @@ class User(UserMixin):
             return None
 
     @staticmethod
-    def is_valid_password(user_id, password):
+    def is_valid_password(user_id, plain_password):
+        """
+        Check whether the password is valid.
+        """
         rows = app.db.execute(
             """
             SELECT password
@@ -77,10 +92,17 @@ class User(UserMixin):
             WHERE ID = :uid
             """,
             uid=user_id)
-        return check_password_hash(rows[0][0], password)
+
+        return check_password_hash(rows[0][0], plain_password)
 
     @staticmethod
-    def update_password(user_id, cur_password, new_password):
+    @login_required
+    def update_password(user_id, cur_password, new_hashed_password):
+        """
+        Change stored password.
+
+        If unsuccessful return TBD.
+        """
         if User.is_valid_password(user_id, cur_password):
             try:
                 rows = app.db.execute(
@@ -90,7 +112,7 @@ class User(UserMixin):
                     RETURNING ID
                     """,
                     uid=user_id,
-                    new_password=generate_password_hash(new_password))
+                    new_password=new_hashed_password)
 
                 print(rows)
                 id = rows[0][0]
@@ -105,6 +127,9 @@ class User(UserMixin):
     @staticmethod
     @login.user_loader
     def get(id):
+        """
+        Retrieve user info based on database id
+        """
         rows = app.db.execute(
             """
             SELECT id, email, firstname, lastname
