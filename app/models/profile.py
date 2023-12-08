@@ -15,6 +15,11 @@ class Profile():
 
     @staticmethod
     def initialize(uid):
+        """
+        Add initial profile.
+
+        Called when users are created. If unsuccessful, TBD.
+        """
         timestamp = datetime.utcnow()
         try:
             rows = app.db.execute(
@@ -26,18 +31,21 @@ class Profile():
                 uid=uid,
                 timestamp=timestamp)
 
-            id = rows[0][0]
-            return Profile.get(id)
+            return Profile.get(rows[0][0])
 
         except Exception as e:
-            # likely email already in use; improve error checking and reporting
+            # improve error checking and reporting
             # the following simply prints the error to the console:
             print(str(e))
             return None
 
     @staticmethod
     def update(uid, ally_code):
-        """ Retrieve data from SWGOH, update local DB """
+        """
+        Retrieve data from SWGOH, update local DB
+
+        If retrieval from SWGOH or database unsuccessful, then TBD.
+        """
         swgoh = SWGOH(ally_code)
         user_data = swgoh.get(["name", "clan"])
         if json is not None:
@@ -52,8 +60,7 @@ class Profile():
                     uid=uid, allyCode=ally_code, clan=user_data["clan"],
                     name=user_data["name"])
 
-                id = rows[0][0]
-                return Profile.get(id)
+                return Profile.get(rows[0][0])
 
             except Exception as e:
                 print(str(e))
