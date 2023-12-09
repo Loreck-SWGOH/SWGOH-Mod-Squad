@@ -8,8 +8,10 @@ from .. import login
 class User(UserMixin):
     """
     Interface to user database table.
+
+    Methods use get(id) to return User object.
     """
-    def __init__(self, id, email, first_name, last_name):
+    def __init__(self, id, email, first_name, last_name, is_admin):
         """
         Don't return password.
         """
@@ -17,6 +19,22 @@ class User(UserMixin):
         self.email = email
         self.first_name = first_name
         self.last_name = last_name
+        self.is_admin = is_admin
+
+    @staticmethod
+    @login.user_loader
+    def get(id):
+        """
+        Retrieve user info based on database id
+        """
+        rows = app.db.execute(
+            """
+            SELECT id, email, firstName, lastName, isAdmin
+            FROM Users
+            WHERE id = :id
+            """, id=id)
+
+        return User(*(rows[0])) if rows else None
 
     @staticmethod
     def get_from_login(email, password):
@@ -28,7 +46,7 @@ class User(UserMixin):
         """
         rows = app.db.execute(
             """
-            SELECT password, id, email, firstname, lastname
+            SELECT password, id
             FROM Users
             WHERE email = :email
             """, email=email)
@@ -39,7 +57,9 @@ class User(UserMixin):
         if len(rows) > 1:
             raise Exception("Database corrupted: " + email + " not unique")
 
-        return User(*(rows[0][1:]))  # Return everything but password
+        id = rows[0][1]
+        return User.get(id)
+        # return User(*(rows[0][1:]))  # Return everything but password
 
     @staticmethod
     def email_exists(email):
@@ -56,7 +76,7 @@ class User(UserMixin):
         return len(rows) > 0
 
     @staticmethod
-    def register(email, password, firstname, lastname):
+    def register(email, password, first_name, last_name, is_admin):
         """
         Register a user by adding them to database.
 
@@ -65,14 +85,17 @@ class User(UserMixin):
         try:
             rows = app.db.execute(
                 """
-                INSERT INTO Users(email, password, firstname, lastname)
-                VALUES(:email, :password, :firstname, :lastname)
+                INSERT INTO Users(email, password,
+                                  firstname, lastname, isAdmin)
+                VALUES(:email, :password, :firstname, :lastname, :isadmin)
                 RETURNING id
                 """,
                 email=email, password=generate_password_hash(password),
-                firstname=firstname, lastname=lastname)
+                firstname=first_name, lastname=last_name,
+                isadmin=int(is_admin))
 
-            return User.get(rows[0[0]])
+            id = rows[0][0]
+            return User.get(id)
 
         except Exception as e:
             # likely email already in use; improve error checking and reporting
@@ -123,18 +146,3 @@ class User(UserMixin):
                 print(str(e))
                 return None
         return None
-
-    @staticmethod
-    @login.user_loader
-    def get(id):
-        """
-        Retrieve user info based on database id
-        """
-        rows = app.db.execute(
-            """
-            SELECT id, email, firstname, lastname
-            FROM Users
-            WHERE id = :id
-            """, id=id)
-
-        return User(*(rows[0])) if rows else None
