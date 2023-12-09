@@ -65,7 +65,7 @@
               <div class="navbar-nav mc-auto">
                   <a class="nav-link" href="{{ url_for('index.index') }}"><i class="fa fa-home"></i>&nbsp;Home</a>
                   <div class="dropdown">
-                      <a href="#" data-bs-toggle="dropdown" class="nav-link dropdown-toggle" data-bs-display="static">Factions</a>
+                      <a href="#" data-bs-toggle="dropdown" class="nav-link dropdown-toggle" data-bs-display="static">Teams</a>
                       <div class="dropdown-menu">
                         {% for faction in factions %}
                             <div class="dropdown-submenu">
@@ -81,7 +81,7 @@
                   </div>
 
                   <div class="dropdown">
-                      <a href="#" id="menu" data-bs-toggle="dropdown" class="nav-link dropdown-toggle" data-bs-display="static">Events</a>
+                      <a href="#" id="menu" data-bs-toggle="dropdown" class="nav-link dropdown-toggle" data-bs-display="static">Game Play</a>
                       <div class="dropdown-menu">
                           <div class="dropdown-submenu">
                             {% for event in events %}
@@ -101,53 +101,18 @@
               </div>
               <div class="navbar-nav ms-auto">
                 {% if current_user.is_authenticated %}
-                    <li><a class="nav-link" href="{{ url_for('users.profile', uid=current_user.id) }}" type="button" class="btn btn-light">Hello {{current_user.firstname}}!</a></li>
-                    <li><a class="nav-link" href="{{ url_for('users.logout') }}" type="button" class="btn btn-light">Log out</a></li>
+                    {% if current_user.is_admin %}
+                        <a class="nav-link" href="{{ url_for('admins.home') }}" type="button" class="btn btn-light"><i class="fa-solid fa-user-gear"></i>&nbsp;Admin</a>
+                    {% endif %}
+                    <a class="nav-link" href="{{ url_for('users.profile', uid=current_user.id) }}" type="button" class="btn btn-light">Hello {{current_user.first_name}}</a>
+                    <a class="nav-link" href="{{ url_for('users.logout') }}" type="button" class="btn btn-light">Log out</a>
                 {% else %}
-                    <li><a class="nav-link" href="{{ url_for('users.register') }}" type="button" class="btn btn-light"><i class="fa-solid fa-user-plus"></i> Register</a></li>
-                    <li><a class="nav-link" href="{{ url_for('users.login') }}" type="button" class="btn btn-light"><i class="fa-solid fa-right-to-bracket"></i> Log In</a></li>
+                    <a class="nav-link" href="{{ url_for('users.register') }}" type="button" class="btn btn-light"><i class="fa-solid fa-user-plus"></i>&nbsp;Register</a>
+                    <a class="nav-link" href="{{ url_for('users.login') }}" type="button" class="btn btn-light"><i class="fa-solid fa-right-to-bracket"></i>&nbsp;Log In</a>
                 {% endif %}
               </div>
           </div>
       </div>
-
-
-    <!-- <div class="container-fluid">
-      <div class="collapse navbar-collapse" id="navbar-collapsed">
-        <div class="navbar-nav me-auto">
-          <a class="nav-link" href="{{ url_for('index.index') }}"><i class="fa fa-home"></i>&nbsp;Home</a>
-          <div class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Factions
-            </a>
-            <div class="dropdown-menu">
-              {% for faction in factions %}
-                <a class="dropdown-item" href="#">{{faction.name}}</a>
-              {% endfor %}
-            </div>
-          </div>
-          <div class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Events
-            </a>
-            <div class="dropdown-menu">
-              {% for event in events %}
-                <a class="dropdown-item" href="#">{{event.name}}</a>
-              {% endfor %}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="navbar-nav ms-auto">
-        {% if current_user.is_authenticated %}
-          <li><a class="nav-link" href="{{ url_for('users.profile', uid=current_user.id) }}" type="button" class="btn btn-light">Hello {{current_user.firstname}}!</a></li>
-          <li><a class="nav-link" href="{{ url_for('users.logout') }}" type="button" class="btn btn-light">Log out</a></li>
-        {% else %}
-          <li><a class="nav-link" href="{{ url_for('users.register') }}" type="button" class="btn btn-light"><i class="fa-solid fa-user-plus"></i> Register</a></li>
-          <li><a class="nav-link" href="{{ url_for('users.login') }}" type="button" class="btn btn-light"><i class="fa-solid fa-right-to-bracket"></i> Log In</a></li>
-        {% endif %}
-      </div>
-    </div> -->
     </nav>
 
     <div class="error-sec">
