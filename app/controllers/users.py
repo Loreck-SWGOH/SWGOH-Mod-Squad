@@ -169,11 +169,6 @@ def profile(uid):
     Unsucessful updates or invalid form credentials reload the profile form.
     """
 
-# Is this section redundant?
-    if not current_user.is_authenticated:
-        flash("Must be logged in to update profile")
-        return redirect(url_for('index.index'))
-
     ally_code_form = AllyCodeForm()
     password_form = PasswordForm()
     if "submit_ac" in request.form.keys():

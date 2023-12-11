@@ -5,6 +5,7 @@ from .config import Config
 from .db import DB
 
 
+""" Specify where app goes when login is required """
 login = LoginManager()
 login.login_view = 'users.login'
 
