@@ -31,6 +31,7 @@ class AdminUsersForm(FlaskForm):
 
 
 @bp.route('/admin', methods=['GET', 'POST'])
+@login_required
 def home():
     """
     Admin page. Reached from admin link on home page (index).
