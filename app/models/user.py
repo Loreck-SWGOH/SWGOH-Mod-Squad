@@ -12,9 +12,6 @@ class User(UserMixin):
     Methods use get(id) to return User object.
     """
     def __init__(self, id, email, first_name, last_name, is_admin):
-        """
-        Don't return password.
-        """
         self.id = id
         self.email = email
         self.first_name = first_name
@@ -59,7 +56,6 @@ class User(UserMixin):
 
         id = rows[0][1]
         return User.get(id)
-        # return User(*(rows[0][1:]))  # Return everything but password
 
     @staticmethod
     def email_exists(email):

@@ -3,7 +3,7 @@ from werkzeug.urls import url_parse
 from werkzeug.security import generate_password_hash
 from flask_login import login_user, logout_user, current_user, login_required
 from flask_wtf import FlaskForm
-from wtforms.fields import StringField, PasswordField, BooleanField, \
+from wtforms import StringField, PasswordField, BooleanField, \
                            SubmitField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 
@@ -114,18 +114,19 @@ def register():
     return render_template('register.html', title='Register', form=reg_form)
 
 
-""" Profile forms"""
+""" Profile forms """
+
+
+class AllyCodeField(StringField):
+    def process_formdata(self, valuelist):
+        self.data = [v.replace('-', '') for v in valuelist]
+        super().process_formdata(self.data)
 
 
 class AllyCodeForm(FlaskForm):
     """
     SWGOH profile form.
     """
-
-    class AllyCodeField(StringField):
-        def process_formdata(self, valuelist):
-            self.data = [v.replace('-', '') for v in valuelist]
-            super().process_formdata(self.data)
 
     ally_code = AllyCodeField('Ally Code', validators=[DataRequired()])
     submit_ac = SubmitField('Update Profile')
