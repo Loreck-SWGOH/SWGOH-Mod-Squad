@@ -9,10 +9,9 @@ from .db import DB
 login = LoginManager()
 login.login_view = 'users.login'
 
-""" Add flask_bootstrap for forms """
-
 
 def create_app():
+    """ Add Bootstrap for CSS """
     app = Flask(__name__)
     app.config.from_object(Config)
 

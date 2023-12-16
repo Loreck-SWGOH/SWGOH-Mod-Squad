@@ -31,7 +31,8 @@ class Profile():
                 uid=uid,
                 timestamp=timestamp)
 
-            return Profile.get(rows[0][0])
+            id = rows[0][0]
+            return Profile.get(id)
 
         except Exception as e:
             # improve error checking and reporting
@@ -60,7 +61,8 @@ class Profile():
                     uid=uid, allyCode=ally_code, clan=user_data["clan"],
                     name=user_data["name"])
 
-                return Profile.get(rows[0][0])
+                id = rows[0][0]
+                return Profile.get(id)
 
             except Exception as e:
                 print(str(e))
