@@ -1,13 +1,14 @@
-# Skeleton Code for CompSci 316 Standard Course Project.
+# SWGOH Mod Squad
 
-Originally created by [Rickard
-Stureborg](http://www.rickard.stureborg.com) and [Yihao
-Hu](https://www.linkedin.com/in/yihaoh/) for Fall 2021.  Amended by
-various teaching staff in subsequent years.
+This code base is used to help users of the game Star Wars Galaxy of Heros mod their heros. The code uses the Flask framework coded in Python.
 
-We assume you are in your course container shell.  If you have a
-different setup, your mileage with the following instructions may
-vary.
+The original code base was created by [Rickard Stureborg](http://www.rickard.stureborg.com) and [Yihao Hu](https://www.linkedin.com/in/yihaoh/) for Duke CPS 316 Fall 2021 projects.  Amended by various teaching staff in subsequent years.
+
+## Create Run-time Environments
+
+The environments for this web application are contained in Docker instancea. Docker instance are virtual machines that runs on your PC. These virtual machines are actually 'images' that are pre-loaded with the software needed to run Python code and interact with databases. The other method would be to load database servers and clients on your PC. Using the Docker instance(s) obviates the need for software bloat on your PC.
+
+1.  At the top of this repository are two (2) files required to create the a Docker instance, `compose.yml` and `install.sh`. `compose.yml` is used to create the Docker instance(s) containing your run-time environment, while `install.sh` creates the appropriate environment, within the Docker instance, for your web application. 
 
 ## Installing the Current Skeleton
 
