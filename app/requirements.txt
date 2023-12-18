@@ -1,9 +1,0 @@
-flake8
-flask
-flask_login
-bootstrap_flask
-python-dotenv
-sqlalchemy
-psycopg2-binary
-werkzeug
-flask_wtf

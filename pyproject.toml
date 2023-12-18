@@ -1,20 +1,25 @@
+# Project managed using poetry
+
 [tool.poetry]
-name = "mini-amazon"
+name = "mod_squad"
 version = "1.2023.0"
-authors = ["CompSci 316 Teaching Staff <compsci-316@duke.edu>"]
-description = "Mini Amazon Course Project"
+authors = ["George S. Hugh <hughgs@duke.edu>"]
+description = "Display mod preferences for SWGOH teams"
+license = "MIT"
+readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
-flask = "2.3.3"
-werkzeug = "2.3.7"
-flask-sqlalchemy = "^3.0.5"
-flask-wtf = "^1.1.1"
-psycopg2-binary = "^2.9.7"
-flask-login = "^0.6.2"
-email-validator = "^2.0.0.post2"
+flask = "*"
+werkzeug = "*"
+flask-sqlalchemy = "*"
+flask-wtf = "*"
+psycopg2-binary = "*"
+flask-login = "*"
+email-validator = "*"
 faker = "^19.3.1"
-python-dotenv = "^1.0.0"
+python-dotenv = "*"
+bootstrap-flask = "*"
 
 [build-system]
 requires = ["poetry-core"]
