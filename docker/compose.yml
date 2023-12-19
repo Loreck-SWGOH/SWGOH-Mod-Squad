@@ -1,0 +1,65 @@
+# Environment variables defined in .env
+services:
+
+  ubuntu:
+    build:
+      context: docker/ubuntu
+      dockerfile: Dockerfile
+      args:
+        - USER=${CONTAINER_USER}
+        - GROUP=${CONTAINER_USER}
+        - PASSWD=${CONTAINER_PASS}
+    environment:
+      TZ: "America/New_York"
+      PGUSER: ${CONTAINER_USER}
+      PGPASSWORD: ${CONTAINER_PASS}
+      PGHOST: postgres
+      PGPORT: 5432
+      SPARK_HOME: /usr/local/lib/python3.11/dist-packages/pyspark
+      SPARK_LOCAL_DIRS: /home/${CONTAINER_USER}/.spark-tmp
+      PYSPARK_PYTHON: python3.11
+    tty: true
+    stdin_open: true
+    user: ${CONTAINER_USER}:${CONTAINER_USER}
+    volumes:
+      - home-data:/home/${CONTAINER_USER}
+      - type: bind
+        source: ../
+        target: /home/${CONTAINER_USER}/shared
+        # do NOT make target the home directory because
+        # setup will write into it before bind takes effect
+    ports:
+      - "8080:8080"
+
+  postgres:
+    image: postgres
+    environment:
+      TZ: "America/New_York"
+      PGTZ: "America/New_York"
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
+      POSTGRES_USER: ${CONTAINER_USER}
+      POSTGRES_PASSWORD: ${CONTAINER_PASS}
+      PG_DATA: /var/lib/postgresql/data
+    restart: always
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - 5432
+        # use "5432:5432" if you want to expose the port
+
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${CONTAINER_USER}@duke.edu
+      PGADMIN_DEFAULT_PASSWORD: ${CONTAINER_PASS}
+      PGADMIN_LISTEN_PORT: 80
+    ports:
+      - "5431:80"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+
+volumes:
+  home-data:
+  postgres-data:
+  pgadmin-data:
