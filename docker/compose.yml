@@ -1,3 +1,4 @@
+# Environment variables defined in .env
 services:
 
   ubuntu:
