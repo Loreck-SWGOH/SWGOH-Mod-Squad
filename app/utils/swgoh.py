@@ -1,8 +1,10 @@
 # from swgoh_comlink import SwgohComlink
 
+SWGOH_GG = "swgoh.gg"
+
 
 class SWGOH():
-    def __init__(self, ally_code):
+    def __init__(self, swgoh_info, ally_code):
         self.comlink = None
         self.player_data = dict()
         self.player_data["name"] = "Loreck Avery"
@@ -10,6 +12,14 @@ class SWGOH():
         # guild_id = self.player_data['guildId']
         # self.comlink = SwgohComlink()
         # self.player_data = self.comlink.get_player(ally_code)
+
+    @staticmethod
+    def get_swgoh_site(use_swgoh_gg, alt_swgoh_gg):
+        if (use_swgoh_gg and len(alt_swgoh_gg) > 0):
+            raise Exception("Cannot set both")
+        if use_swgoh_gg:
+            return SWGOH_GG
+        return alt_swgoh_gg
 
     def get(self, keys):
         """
