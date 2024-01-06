@@ -8,9 +8,16 @@ This directory contains the files needed to set-up a Docker container(s) to deve
 
 * If you're using Windows, ensure that Windows Subsytem for Linux (WSL) has been [completely installed](https://learn.microsoft.com/en-us/windows/wsl/install). You may need to enable virtualization within the BIOS settings to complete the installation.
 
-* Download (or update) [Docker Desktop](https://docs.docker.com/get-docker/) on your laptop. Follow the installation instructions for your operating system. If you using a PC with an Enterprise edition, you can use the Hyper-V Docker configuration. However, this guide will assume that you're using a WSL configuration. Ensure that you can start the Docker Desktop.
+* Download (or update) Docker Desktop on your laptop by following the [installation instructions](https://docs.docker.com/get-docker/) for your operating system. If you are using a PC with an Enterprise edition, you can use the Hyper-V Docker configuration. However, this guide will assume that you are using the WSL configuration. Ensure that you can start the Docker Desktop.
 
-* Identify a directory that will contain your Docker containers and your git repositories. You can use a course specific directory or a general directory. We will call this directory your "project directory". It is important that the containers and repositories are in the same directory to allow project code access outside of the Docker instance. WARNING: We do NOT recommend putting this directory in cloud storage --- permissions on such files may be messed up and you may have trouble running programs that depend on having specific permissions.
+* Identify a directory that will contain your Docker containers and your git repositories. We will call this directory your "project directory".
+  ```
+  ├── project directory
+      └── container
+      └── git
+      ├── *
+  ```
+It is important that the containers and repositories are in the same directory to allow project code access outside of the Docker instance. WARNING: It is NOT recommended putting these directories in cloud storage --- permissions on such files may be messed up and you may have trouble running programs that depend on having specific permissions.
 
 * Download all the files in the docker folder of this repository into a subdirectory within your project directory. Name (or rename) that subdirectory `container`.  We will call this subdirectory your "container directory".  If it's set up correctly, you should be able to find the file with path `container/compose.yaml` relative to your project directory.
 
