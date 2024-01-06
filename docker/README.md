@@ -6,9 +6,9 @@ This directory contains the files needed to set-up a Docker container(s) to deve
 
 * Identify the command-line interface (CLI) for your operating system. For Mac/Linux, this is the Terminal program. For Windows, this is the PowerShell program.  We will call this your "CLI".
 
-* If you're using Windows, ensure that Windows Subsytem for Linux (WSL) has been [completely installed](https://learn.microsoft.com/en-us/windows/wsl/install). You may need to use your CLI for this step.
+* If you're using Windows, ensure that Windows Subsytem for Linux (WSL) has been [completely installed](https://learn.microsoft.com/en-us/windows/wsl/install). You may need to enable virtualization within the BIOS settings to complete the installation.
 
-* Download (or update) [Docker Desktop](https://docs.docker.com/get-docker/) on your laptop. Follow the installation instructions for your operating system. If you using a PC, configuring Docker will depend on the type of Windows (Home, Pro, or Enterprise) you're running. If you have the Home version you are limited to If Docker is installed on Windows then make sure that you enable the Hyper-V backend configuration. The Hyper-V configuration will allow you to access your project code outside of the Docker instance. If you do not see an option for using Hyper-V during the configuration phase you will need to enable it before installing Docker.
+* Download (or update) [Docker Desktop](https://docs.docker.com/get-docker/) on your laptop. Follow the installation instructions for your operating system. If you using a PC with an Enterprise edition, you can use the Hyper-V Docker configuration. However, this guide will assume that you're using a WSL configuration. Ensure that you can start the Docker Desktop.
 
 * Identify a directory that will contain your Docker containers and your git repositories. You can use a course specific directory or a general directory. We will call this directory your "project directory". It is important that the containers and repositories are in the same directory to allow project code access outside of the Docker instance. WARNING: We do NOT recommend putting this directory in cloud storage --- permissions on such files may be messed up and you may have trouble running programs that depend on having specific permissions.
 
