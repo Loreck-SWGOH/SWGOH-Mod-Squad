@@ -6,7 +6,7 @@ The original code base was created by [Rickard Stureborg](http://www.rickard.stu
 
 ## Create Developmental/Run-time Environments
 
-The environments for this web application are contained in Docker instances. Docker instances are virtual machines that runs on your PC. These virtual machines are actually 'images' that are pre-loaded with the software needed to run Python code and interact with databases. The other method would be to load database servers and clients on your PC. Using the Docker instance(s) obviates the need for software bloat on your PC.
+The environments for this web application are contained in Docker instances. Docker instances are computer processes that run on your PC. These processes are actually 'images' that are pre-loaded with the software needed to run the app's Python code and interact with the app's databases. The other method would be to load database servers and clients on your PC. Using the Docker instance(s) obviates the need for software bloat on your PC.
 
 All instructions and files needed to create the Docker instances are contained in the docker directory of this repository. Follow the [instructions](docker/README.md) in that directory to install and set up your Docker instance.
 
