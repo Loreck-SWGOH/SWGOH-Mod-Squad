@@ -17,21 +17,15 @@ This directory contains the files needed to set-up a Docker container(s) to deve
       └── git
       ├── *
   ```
-It is important that the containers and repositories are in the same directory to allow project code access outside of the Docker instance. WARNING: It is NOT recommended putting these directories in cloud storage --- permissions on such files may be messed up and you may have trouble running programs that depend on having specific permissions.
+  It is important that the containers and repositories are in the same directory to allow project code access outside of the Docker instance. WARNING: It is NOT recommended putting these directories in cloud storage --- permissions on such files may be messed up and you may have trouble running programs that depend on having specific permissions.
 
-* Download all the files in the docker folder of this repository into a subdirectory within your project directory. Name (or rename) that subdirectory `container`.  We will call this subdirectory your "container directory".  If it's set up correctly, you should be able to find the file with path `container/compose.yaml` relative to your project directory.
+* Download all the files in this folder into the `container` subdirectory created above. Since GitHub works on a per repo basis you may have to download the entire repo as an archive (zip, tar, etc.) and extract only the interested files. We will call this subdirectory your "container directory".  If it's set up correctly, you should be able to find the file with path `container/compose.yaml` relative to your project directory.
 
 ## Getting started
 
-* Make a copy of the file `env-template.txt` in the container subdirectory and name it `.env`; then edit the fields to your liking.  The following commands assume you are using Mac/Linux:
-  ```
-  cd ~/316/container/
-  cp env-template.txt .env
-  nano .env
-  ```
-  For all subsequent steps, we assume that Docker Desktop is up and running, and you are executing commands in your host shell with your working directory being the container subdirectory (where `compose.yaml` resides).
+* Ensure that the Docker Desktop is running. Open your CLI and change directories to your container subdirectory. Add environment variables to the `.env` file if desired.
 
-* Use the following to prepare for launching containers the first time:
+* Prepare the Docker containers:
   ```
   docker compose build
   ```
