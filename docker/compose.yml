@@ -22,9 +22,9 @@ services:
     stdin_open: true
     user: ${CONTAINER_USER}:${CONTAINER_USER}
     volumes:
-      - home-data:/home/${CONTAINER_USER}
-      - type: bind
-        source: ../
+      - home-data:/home/${CONTAINER_USER}  # mount home-data here
+      - type: bind  # access local directory, want to change this
+        source: ../git/
         target: /home/${CONTAINER_USER}/shared
         # do NOT make target the home directory because
         # setup will write into it before bind takes effect
@@ -60,6 +60,7 @@ services:
       - pgadmin-data:/var/lib/pgadmin
 
 volumes:
+  # Define volumes used across multiple containers
   home-data:
   postgres-data:
   pgadmin-data:

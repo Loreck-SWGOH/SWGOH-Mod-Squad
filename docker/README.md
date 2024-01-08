@@ -10,7 +10,7 @@ This directory contains the files needed to set-up a Docker container(s) to deve
 
 * Download (or update) Docker Desktop on your laptop by following the [installation instructions](https://docs.docker.com/get-docker/) for your operating system. If you are using a PC with an Enterprise edition, you can use the Hyper-V Docker configuration. However, this guide will assume that you are using the WSL configuration. Ensure that you can start the Docker Desktop.
 
-* Identify a directory that will contain your Docker containers and your git repositories. We will call this directory your "project directory".
+* Identify a directory that will contain your Docker containers and your git repositories. We will call this directory your "project directory". We will call the container directory your "container subdirectory".
   ```
   ├── project directory
       └── container
@@ -19,36 +19,37 @@ This directory contains the files needed to set-up a Docker container(s) to deve
   ```
   It is important that the containers and repositories are in the same directory to allow project code access outside of the Docker instance. WARNING: It is NOT recommended putting these directories in cloud storage --- permissions on such files may be messed up and you may have trouble running programs that depend on having specific permissions.
 
-* Download all the files in this folder into the `container` subdirectory created above. Since GitHub works on a per repo basis you may have to download the entire repo as an archive (zip, tar, etc.) and extract only the interested files. We will call this subdirectory your "container directory".  If it's set up correctly, you should be able to find the file with path `container/compose.yaml` relative to your project directory.
+* Download all the files in this folder into the `container` subdirectory created above. Since GitHub works on a per repo basis you may have to download the entire repo as an archive (zip, tar, etc.) and extract only the interested files. If it's set up correctly, you should be able to find the file with path `container/compose.yaml` relative to your project directory.
 
 ## Getting started
 
-* Ensure that the Docker Desktop is running. Open your CLI and change directories to your container subdirectory. Add environment variables to the `.env` file if desired.
+* Ensure that the Docker Desktop is running. Open your CLI and change to your container subdirectory. Add environment variables to the `.env` file if desired.
 
-* Prepare the Docker containers:
+* In the CLI, from the container subdirectory, prepare the Docker containers:
   ```
   docker compose build
   ```
-  This will take quite some time, as it involves downloading various software and setting things up, but you only have to run this once.
+  This will take quite some time, as it involves downloading various software and setting things up, but you only have to run this once. When complete you should see the container image in Docker Desktop.
 
-* In our default setup, we assume that for convenience, you will want to access your entire course directory from within your container as well.  Hence, before we launch the containers, open Settings for Docker Desktop, go to Resources -> File Sharing, and add your course directory (one level above the container directory) to the list (to be "bind mounted").
+* The default setup assumes that you will access the development code outside the Docker instance and that the development code is located within the git subdirectory that you created above. If you make changes to the location/name of your git subdirectory, then make the appropriate changes to `compose.yml`
 
-* To start the containers for the first time, 
+* In the CLI, from the container subdirectory, to start the containers for the first time, 
   ```
   docker compose up -d
   ```
+  If successful, then you should see new containers in the Docker Desktop.
 
 ## Using containers
 
-For the following, assume that Docker Desktop is up and running, and you are executing commands in your host shell with your working directory being the container subdirectory (where `compose.yaml` resides).
+You can manage your containers from the Docker Desktop. Starting and stopping the containers can be performed via the `Containers` section in the left menu of the Docker Desktop.
 
-* To start/stop running the containers, use:
+* If you need to use the CLI, then from the container subdirectory you can start/stop running the containers:
   ```
   docker compose start
   docker compose stop
   ```
 
-* While the containers are running, to log into your container running Ubuntu, type:
+* While the containers are running you can log into the Ubuntu container. From the CLI, change to the container subdirectory, and type:
   ```
   docker compose exec -it ubuntu bash --login
   ```
