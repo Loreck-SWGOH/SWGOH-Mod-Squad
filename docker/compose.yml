@@ -9,6 +9,7 @@ services:
         - USER=${CONTAINER_USER}
         - GROUP=${CONTAINER_USER}
         - PASSWD=${CONTAINER_PASS}
+    container_name: ubuntu
     environment:
       TZ: "America/New_York"
       PGUSER: ${CONTAINER_USER}
@@ -23,8 +24,8 @@ services:
     user: ${CONTAINER_USER}:${CONTAINER_USER}
     volumes:
       - home-data:/home/${CONTAINER_USER}  # mount home-data here
-      - type: bind  # access local directory, want to change this
-        source: ../git/
+      - type: bind  # access local directory
+        source: ../git/  # change to match local directory structure
         target: /home/${CONTAINER_USER}/shared
         # do NOT make target the home directory because
         # setup will write into it before bind takes effect
@@ -33,6 +34,7 @@ services:
 
   postgres:
     image: postgres
+    container_name: postgres
     environment:
       TZ: "America/New_York"
       PGTZ: "America/New_York"
@@ -49,6 +51,7 @@ services:
 
   pgadmin:
     image: dpage/pgadmin4
+    container_name: pgadmin
     restart: always
     environment:
       PGADMIN_DEFAULT_EMAIL: ${CONTAINER_USER}@duke.edu
