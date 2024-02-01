@@ -77,10 +77,10 @@ get back to the normal container shell.
 
 ## Working with the Database
 
-Your Flask server interacts with a PostgreSQL database called `amazon`
+Your Flask server interacts with a PostgreSQL database called `mod_squad`
 behind the scene.  As part of the installation procedure above, this
 database has been created automatically for you.  You can access the
-database directly by running the command `psql amazon` in your VM.
+database directly by running the command `psql mod_squae` in your VM.
 
 For debugging, you can access the database while the Flask server is
 running.  We recommend you open a second container shell to run `psql
@@ -99,7 +99,7 @@ or any `psql` sessions; then, from your repository directory, run
   (re-)initializing the database will cause your Flask server to fail,
   so make sure you fix them.
 
-* If you get `ERROR: database "amazon" is being accessed by other
+* If you get `ERROR: database "mod_squad" is being accessed by other
   users`, that means you likely have Flask or another `psql` still
   running; terminate them and re-run `db/setup.sh`.  If you cannot
   seem to find where you are running them, a sure way to get rid of
@@ -121,7 +121,7 @@ running `python gen.py`.
   store data on disk files using an efficient, binary format.  In
   other words, if you change your database contents through your
   website or through `psql`, you will NOT see these changes reflected
-  in these CSV files (but you can see them through `psql amazon`).
+  in these CSV files (but you can see them through `psql mod_squad`).
 
 * For safety, a database should never store password in plain text;
   instead it stores one-way hash of the password.  This rule applies
