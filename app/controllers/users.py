@@ -91,7 +91,7 @@ class RegistrationForm(FlaskForm):
 @bp.route('/register', methods=['GET', 'POST'])
 def register():
     """
-    Allow user to register themselve. Reached from registration link on home
+    Allow user to register themselvew. Reached from registration link on home
     page (index) or from login page. Users cannot register as administrators
 
     Uses GET to allow form to be filled in. Uses POST to attempt registration.

@@ -9,6 +9,7 @@ from wtforms.fields import BooleanField, SubmitField
 
 from app.controllers.users import RegistrationForm
 
+from ..models.stats.user import UserStats
 from ..models.user import User
 # from ..models.profile import Profile
 
@@ -21,12 +22,14 @@ Forms and routes for administrating the web app
 """
 
 
-class AdminUsersForm(FlaskForm):
+class AdminForm(FlaskForm):
     """
-    Manage users form
+    Form to manage users
     """
-    add_user = SubmitField('Add User')
+    upgrade_user = SubmitField('Upgrade User')
     rm_user = SubmitField('Remove User')
+    add_event = SubmitField('Add Event')
+    add_team = SubmitField('Add Team')
 
 
 @bp.route('/admin', methods=['GET', 'POST'])
@@ -36,13 +39,14 @@ def home():
     Admin page. Reached from admin link on home page (index).
 
     Displays site/app statistics. Allow admins to manage app
-    information; users, etc.i.e. users.
+    information; users, events, teams, etc.
     """
 
     if not current_user.is_admin:
         return redirect(url_for('index.index'))
 
-    admin_user_form = AdminUsersForm()
+    admin_user_form = AdminForm()
+    user_stats = UserStats.get()
     # if login_form.validate_on_submit():
     #     try:
     #         user = User.get_from_login(login_form.email.data,
@@ -62,7 +66,8 @@ def home():
 
     #     return redirect(next_page)
 
-    return render_template('admin.html', form=admin_user_form)
+    return render_template('admin.html',
+                           form=admin_user_form, user_stats=user_stats)
 
 
 class AdminRegistrationForm(RegistrationForm):
