@@ -17,10 +17,9 @@
                     <th scope="row">{{user_stats.users}}</th>
                     <td>{{user_stats.admins}}</td>
                     <td>
-                        <a href="#">{{form.upgrade_user(class_="btn btn-black")}}</a>
-                        <a href="#">{{form.rm_user(class_="btn btn-black")}}</a>
-                        <a href="#">{{form.add_event(class_="btn btn-black")}}</a>
-                        <a href="#">{{form.add_team(class_="btn btn-black")}}</a>
+                        <a type="button" class="btn btn-black" href="{{ url_for('admins.edit_users') }}">Edit Users</a>
+                        <a type="button" class="btn btn-black" href="{{ url_for('admins.add_event') }}">Add Event</a>
+                        <a type="button" class="btn btn-black" href="{{ url_for('admins.add_team') }}">Add Team</a>
                     </td>
                 </tr>
             </tbody>

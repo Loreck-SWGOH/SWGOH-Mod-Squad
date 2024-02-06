@@ -172,7 +172,7 @@ def profile(uid):
     """
     Profile page. Reached from any page while logged in.
 
-    Displays 2 forms, SWGOH profile and change password.
+    Displays two (2) forms, SWGOH profile and change password.
 
     Needs unique names for the submit buttons on each form,
     since validate_on_submit() doesn't work with multiple forms.

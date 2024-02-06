@@ -28,7 +28,6 @@ class UserStats():
                 SELECT COUNT(*)
                 FROM Users
                 """)
-            print(rows)
             num_users = rows[0][0]
         except Exception as e:
             # improve error checking and reporting
@@ -43,7 +42,6 @@ class UserStats():
                 FROM Users
                 WHERE isAdmin = 1
                 """)
-            print(rows)
             admins = rows[0][0]
         except Exception as e:
             # improve error checking and reporting
