@@ -3,8 +3,8 @@ from flask import render_template, redirect, url_for, flash
 # from werkzeug.security import generate_password_hash
 from flask_login import current_user, login_required
 # from flask_login import logout_user, current_user, login_required
-# from flask_wtf import FlaskForm
-from wtforms.fields import BooleanField
+from flask_wtf import FlaskForm
+from wtforms.fields import BooleanField, SubmitField
 # from wtforms.validators import ValidationError, DataRequired, EqualTo
 
 from app.controllers.users import RegistrationForm
@@ -22,14 +22,6 @@ Forms and routes for administrating the web app
 """
 
 
-# class AdminForm(FlaskForm):
-#     """
-#     Form to manage users
-#     """
-#     add_event = SubmitField('Add Event')
-#     add_team = SubmitField('Add Team')
-
-
 @bp.route('/admin', methods=['GET', 'POST'])
 @login_required
 def home():
@@ -40,7 +32,6 @@ def home():
     information; users, events, teams, etc.
     """
 
-    print("Admin home page")
     if not current_user.is_admin:
         return redirect(url_for('index.index'))
 
@@ -67,9 +58,23 @@ def home():
     return render_template('admin.html', user_stats=user_stats)
 
 
-@bp.route('/admin/edit_users', methods=['GET', 'POST'])
+@bp.route('/admin/users', methods=['GET', 'POST'])
 @login_required
-def edit_users():
+def list_users():
+    users = User.get_all()
+    return render_template('users.html', users=users)
+
+
+class EditUserForm(FlaskForm):
+    """
+    Form to edit users
+    """
+    update_user = SubmitField("Update User")
+
+
+@bp.route('/admin/edit_user/<int:id>', methods=['GET', 'POST'])
+@login_required
+def edit_user(id):
     """
     Admin page. Reached from admin link on home page (index).
 
@@ -77,13 +82,13 @@ def edit_users():
     information; users, events, teams, etc.
     """
 
-    print("Edit users page")
+    print("Edit user page")
     if not current_user.is_admin:
         return redirect(url_for('index.index'))
 
     # get all users
-    users = User.get_all()
-    print(users)
+    user = User.get(id)
+    print(user)
     # if login_form.validate_on_submit():
     #     try:
     #         user = User.get_from_login(login_form.email.data,
