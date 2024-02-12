@@ -7,21 +7,43 @@
     <h2>{{ title }}</h2>
     <br />
     <form method="post" role="form" enctype="multipart/form-data">
-        {{ ally_code_form.csrf_token }}
-        {{ ally_code_form.hidden_tag() }}
-        <!-- {{ render_form(ally_code_form) }} -->
+        {{ swgoh_form.csrf_token }}
+        {{ swgoh_form.hidden_tag() }}
+        <!-- {{ render_form(swgoh_form) }} -->
         <div class="form-group">
             <div class="row mb-3">
-                {{ ally_code_form.ally_code.label(class_="col-sm-1 col-form-label") }}
-                <div class="col-sm-7">
-                    {{ ally_code_form.ally_code(size=64, class_="form-control") }}
-                    {% for error in ally_code_form.ally_code.errors %}
+                <div class="col-sm-1">
+                    {{ swgoh_form.ally_code.label(class_="col-form-label") }}
+                </div>
+                <div class="col-sm-3">
+                    {{ swgoh_form.ally_code(size=16, class_="form-control") }}
+                    {% for error in swgoh_form.ally_code.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                     {% endfor %}
                 </div>
-          </div>
+            </div>
         </div>
-        {{ ally_code_form.submit_ac(class_="btn btn-black") }}
+
+        <div class="form-group">
+            <div class="row mb-3">
+                <div class="col-sm-2">
+                    {{ swgoh_form.use_swgoh_gg.label(class_="col-form-label") }}
+                </div>
+                <div class="col-sm-1">
+                    {{ swgoh_form.use_swgoh_gg(class_="form check") }}
+                </div>
+                <div class="col-sm-2">
+                    {{ swgoh_form.alt_swgoh_gg.label(class_="col-form-label") }}
+                </div>
+                <div class="col-sm-5">
+                    {{ swgoh_form.alt_swgoh_gg(class_="form-control") }}
+                    {% for error in swgoh_form.alt_swgoh_gg.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {{ swgoh_form.submit_swgoh(class_="btn btn-black") }}
     </form>
 
     <br />
@@ -31,7 +53,9 @@
         {{ password_form.hidden_tag() }}
         <div class="form-group">
             <div class="row mb-3">
-                {{ password_form.cur_password.label(class_="col-sm-1 col-form-label") }}
+                <div class="col-sm-2">
+                    {{ password_form.cur_password.label(class_="col-form-label") }}
+                </div>
                 <div class="col-sm-4">
                     {{ password_form.cur_password(size=32, class_="form-control") }}
                     {% for error in password_form.cur_password.errors %}
@@ -43,7 +67,9 @@
 
         <div class="form-group">
             <div class="row mb-3">
-                {{ password_form.new_password.label(class_="col-sm-1 col-form-label") }}
+                <div class="col-sm-2">
+                    {{ password_form.new_password.label(class_="col-form-label") }}
+                </div>
                 <div class="col-sm-4">
                     {{ password_form.new_password(size=32, class_="form-control") }}
                     {% for error in password_form.new_password.errors %}
@@ -55,7 +81,9 @@
 
         <div class="form-group">
             <div class="row mb-3">
-                {{ password_form.new_password2.label(class_="col-sm-1 col-form-label") }}
+                <div class="col-sm-2">
+                    {{ password_form.new_password2.label(class_="col-form-label") }}
+                </div>
                 <div class="col-sm-4">
                     {{ password_form.new_password2(size=32, class_="form-control") }}
                     {% for error in password_form.new_password2.errors %}

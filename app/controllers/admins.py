@@ -9,6 +9,7 @@ from wtforms.fields import BooleanField, SubmitField
 
 from app.controllers.users import RegistrationForm
 
+from ..models.stats.user import UserStats
 from ..models.user import User
 # from ..models.profile import Profile
 
@@ -21,14 +22,6 @@ Forms and routes for administrating the web app
 """
 
 
-class AdminUsersForm(FlaskForm):
-    """
-    Manage users form
-    """
-    add_user = SubmitField('Add User')
-    rm_user = SubmitField('Remove User')
-
-
 @bp.route('/admin', methods=['GET', 'POST'])
 @login_required
 def home():
@@ -36,13 +29,13 @@ def home():
     Admin page. Reached from admin link on home page (index).
 
     Displays site/app statistics. Allow admins to manage app
-    information; users, etc.i.e. users.
+    information; users, events, teams, etc.
     """
 
     if not current_user.is_admin:
         return redirect(url_for('index.index'))
 
-    admin_user_form = AdminUsersForm()
+    user_stats = UserStats.get()
     # if login_form.validate_on_submit():
     #     try:
     #         user = User.get_from_login(login_form.email.data,
@@ -62,12 +55,125 @@ def home():
 
     #     return redirect(next_page)
 
-    return render_template('admin.html', form=admin_user_form)
+    return render_template('admin.html', user_stats=user_stats)
+
+
+@bp.route('/admin/users', methods=['GET', 'POST'])
+@login_required
+def list_users():
+    users = User.get_all()
+    return render_template('users.html', users=users)
+
+
+class EditUserForm(FlaskForm):
+    """
+    Form to edit users
+    """
+    update_user = SubmitField("Update User")
+
+
+@bp.route('/admin/edit_user/<int:id>', methods=['GET', 'POST'])
+@login_required
+def edit_user(id):
+    """
+    Admin page. Reached from admin link on home page (index).
+
+    Displays site/app statistics. Allow admins to manage app
+    information; users, events, teams, etc.
+    """
+
+    print("Edit user page")
+    if not current_user.is_admin:
+        return redirect(url_for('index.index'))
+
+    # get all users
+    user = User.get(id)
+    print(user)
+    # if login_form.validate_on_submit():
+    #     try:
+    #         user = User.get_from_login(login_form.email.data,
+    #                                    login_form.password.data)
+    #     except Exception as e:
+    #         flash(str(e))
+    #         return redirect(url_for("users.login"))
+
+    #     if user is None:
+    #         flash('Invalid email or password')
+    #         return redirect(url_for('users.login'))
+
+    #     login_user(user)
+    #     next_page = request.args.get('next')
+    #     if not next_page or url_parse(next_page).netloc != '':
+    #         next_page = url_for('index.index')
+
+    #     return redirect(next_page)
+
+    return render_template('admin.html')
+
+
+@bp.route('/admin/add_event', methods=['GET', 'POST'])
+@login_required
+def add_event():
+    """
+    Admin page. Reached from admin link on home page (index).
+
+    Displays site/app statistics. Allow admins to manage app
+    information; users, events, teams, etc.
+    """
+
+    print("Edit users page")
+    if not current_user.is_admin:
+        return redirect(url_for('index.index'))
+
+    # get all users
+    users = User.get_all()
+    print(users)
+    # if login_form.validate_on_submit():
+    #     try:
+    #         user = User.get_from_login(login_form.email.data,
+    #                                    login_form.password.data)
+    #     except Exception as e:
+    #         flash(str(e))
+    #         return redirect(url_for("users.login"))
+
+    #     if user is None:
+    #         flash('Invalid email or password')
+    #         return redirect(url_for('users.login'))
+
+    #     login_user(user)
+    #     next_page = request.args.get('next')
+    #     if not next_page or url_parse(next_page).netloc != '':
+    #         next_page = url_for('index.index')
+
+    #     return redirect(next_page)
+
+    return render_template('admin.html')
+
+
+@bp.route('/admin/add_team', methods=['GET', 'POST'])
+@login_required
+def add_team():
+    """
+    Admin page. Reached from admin link on home page (index).
+
+    Displays site/app statistics. Allow admins to manage app
+    information; users, events, teams, etc.
+    """
+
+    print("Edit users page")
+    if not current_user.is_admin:
+        return redirect(url_for('index.index'))
+
+    # get all users
+    users = User.get_all()
+    print(users)
+
+    return render_template('admin.html')
 
 
 class AdminRegistrationForm(RegistrationForm):
     """
-    Registration form for admin. Allow creationg of admin accounts.
+    Registration form for admin. Allow creation of admin accounts.
 
     Expand the user's registration form and add ability to create an admin
     account.

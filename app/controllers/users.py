@@ -5,7 +5,8 @@ from flask_login import login_user, logout_user, current_user, login_required
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, \
                            SubmitField
-from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
+from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, \
+                            URL
 
 from ..models.user import User
 from ..models.profile import Profile
@@ -90,7 +91,7 @@ class RegistrationForm(FlaskForm):
 @bp.route('/register', methods=['GET', 'POST'])
 def register():
     """
-    Allow user to register themselve. Reached from registration link on home
+    Allow user to register themselvew. Reached from registration link on home
     page (index) or from login page. Users cannot register as administrators
 
     Uses GET to allow form to be filled in. Uses POST to attempt registration.
@@ -118,24 +119,36 @@ def register():
 
 
 class AllyCodeField(StringField):
+    """
+    Remove dashes, could check for conversion to integer
+    """
     def process_formdata(self, valuelist):
         self.data = [v.replace('-', '') for v in valuelist]
         super().process_formdata(self.data)
 
 
-class AllyCodeForm(FlaskForm):
+class SWGOHForm(FlaskForm):
     """
     SWGOH profile form.
+
+    Only dashes and numbers allowed in ally code
+    Cannot choose both swgoh.gg and alternate source
     """
 
     ally_code = AllyCodeField('Ally Code', validators=[DataRequired()])
-    submit_ac = SubmitField('Update Profile')
+    use_swgoh_gg = BooleanField('Use swgoh.gg')
+    alt_swgoh_gg = StringField('Alternate SWGOH info', validators=[URL()])
+    submit_swgoh = SubmitField('Update Profile')
 
     def validate_ally_code(self, ally_code):
         try:
             int(ally_code.data)
         except ValueError:
             raise ValidationError('Only numbers and dashes allowed.')
+
+    def validate_alt_swgoh_gg(self, alt_swgoh_gg):
+        if (len(alt_swgoh_gg.data) != 0 and self.use_swgoh_gg.data):
+            raise ValidationError('Can only choose one alternate source')
 
 
 class PasswordForm(FlaskForm):
@@ -159,7 +172,7 @@ def profile(uid):
     """
     Profile page. Reached from any page while logged in.
 
-    Displays 2 forms, SWGOH profile and change password.
+    Displays two (2) forms, SWGOH profile and change password.
 
     Needs unique names for the submit buttons on each form,
     since validate_on_submit() doesn't work with multiple forms.
@@ -170,15 +183,16 @@ def profile(uid):
     Unsucessful updates or invalid form credentials reload the profile form.
     """
 
-    ally_code_form = AllyCodeForm()
+    swgoh_form = SWGOHForm()
     password_form = PasswordForm()
-    if "submit_ac" in request.form.keys():
-        if ally_code_form.validate():
-            if Profile.update(uid, int(ally_code_form.ally_code.data)):
+    if "submit_swgoh" in request.form.keys():
+        if swgoh_form.validate():
+            if Profile.update(uid, int(swgoh_form.ally_code.data)):
                 flash('Profile updated')
                 return redirect(url_for('users.login'))
             flash("Couldn't update profile")
             return redirect(url_for("users.profile", uid=uid))
+        print("Submitted but invalid")
 
     if "submit_pwd" in request.form.keys():
         if password_form.validate():
@@ -191,7 +205,7 @@ def profile(uid):
             return redirect(url_for("users.profile", uid=uid))
 
     return render_template('profile.html', title='Update Profile',
-                           ally_code_form=ally_code_form,
+                           swgoh_form=swgoh_form,
                            password_form=password_form, id=uid)
 
 

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h2>Current Users</h2>
+        <br />
+        <table class='table table-bordered table-hover container'>
+            <thead class="table-dark">
+                <tr class="text-center">
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">E-mail</th>
+                    <th scope="col">Admin?</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+              {% for user in users %}
+                  <tr>
+                      <th scope="row">{{user.first_name}}</th>
+                      <td>{{user.last_name}}</td>
+                      <td>{{user.email}}</td>
+                      <td class="text-center">{% if user.is_admin %}<i class="fa-solid fa-check"></i>{% endif %}</td>
+                      <td class="text-center">
+                          <a type="button" class="btn btn-black btn-sm" href="{{ url_for('admins.edit_user', id=user.id) }}">Edit</a>
+                          <a type="button" class="btn btn-black btn-sm" href="{{ url_for('admins.edit_user', id=user.id) }}">Delete</a>
+                      </td>
+                    </tr>
+              {% endfor %}
+            </tbody>
+        </table>
+
+{% endblock %}

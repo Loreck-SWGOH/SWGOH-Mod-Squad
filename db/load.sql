@@ -10,6 +10,11 @@ VALUES
     (0, TO_DATE('01/01/2001', 'MM/DD/YYYY')),
     (1, TO_DATE('01/01/2001', 'MM/DD/YYYY'));
 
+\COPY GamePlay FROM 'GamePlay.csv' WITH DELIMITER ',' NULL '' CSV
+SELECT pg_catalog.setval('public.gameplay_id_seq',
+                         (SELECT MAX(id)+1 FROM GamePlay),
+                         false);
+
 \COPY Campaigns FROM 'Campaigns.csv' WITH DELIMITER ',' NULL '' CSV
 SELECT pg_catalog.setval('public.campaigns_id_seq',
                          (SELECT MAX(id)+1 FROM Campaigns),

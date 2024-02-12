@@ -6,12 +6,25 @@ from app.utils.swgoh import SWGOH
 
 
 class Profile():
-    def __init__(self, uid, ally_code, name, clan, join_date):
+    def __init__(self, uid, ally_code, swgoh_info, swgoh_name,
+                 clan_id, join_date):
         self.id = uid
         self.ally_code = ally_code
-        self.swgoh_name = name
-        self.clan = clan
+        self.swgoh_info = swgoh_info
+        self.swgoh_name = swgoh_name
+        self.clan_id = clan_id
         self.join_date = join_date
+
+    @staticmethod
+    def get(id):
+        rows = app.db.execute(
+            """
+            SELECT userID, allyCode, swgohInfo, swgohName, clanID, joinDate
+            FROM Profiles
+            WHERE userID = :id
+            """, id=id)
+
+        return Profile(*(rows[0])) if rows else None
 
     @staticmethod
     def initialize(uid):
@@ -41,13 +54,14 @@ class Profile():
             return None
 
     @staticmethod
-    def update(uid, ally_code):
+    def update(uid, ally_code, use_swgoh_gg, alt_swgoh_gg):
         """
         Retrieve data from SWGOH, update local DB
 
         If retrieval from SWGOH or database unsuccessful, then TBD.
         """
-        swgoh = SWGOH(ally_code)
+        swgoh_info = SWGOH.get_swgoh_site(use_swgoh_gg, alt_swgoh_gg)
+        swgoh = SWGOH(swgoh_info, ally_code)
         user_data = swgoh.get(["name", "clan"])
         if json is not None:
             try:
@@ -69,14 +83,3 @@ class Profile():
                 return None
 
         return None
-
-    @staticmethod
-    def get(id):
-        rows = app.db.execute(
-            """
-            SELECT userID, allyCode, name, clan, joinDate
-            FROM Profiles
-            WHERE userID = :id
-            """, id=id)
-
-        return Profile(*(rows[0])) if rows else None

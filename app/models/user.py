@@ -34,6 +34,15 @@ class User(UserMixin):
         return User(*(rows[0])) if rows else None
 
     @staticmethod
+    def get_all():
+        rows = app.db.execute(
+            """
+            SELECT id, email, firstName, lastName, isAdmin
+            FROM Users
+            """)
+        return [User(*row) for row in rows]
+
+    @staticmethod
     def get_from_login(email, password):
         """
         Get user info when attempting to login.
