@@ -1,79 +1,48 @@
 # SWGOH Mod Squad
 
-This code base is used to help users of the game Star Wars Galaxy of Heros mod their heros. The code uses the Flask framework coded in Python.
+This web application is used to help player of Star Wars Galaxy of Heros apply and manage mods on their heros. This application uses the Flask framework coded in Python.
 
-The original code base was created by [Rickard Stureborg](http://www.rickard.stureborg.com) and [Yihao Hu](https://www.linkedin.com/in/yihaoh/) for Duke CPS 316 Fall 2021 projects.  Amended by various teaching staff in subsequent years.
+The original code base was created by [Rickard Stureborg](http://www.rickard.stureborg.com) and [Yihao Hu](https://www.linkedin.com/in/yihaoh/) for Duke CPS 316 Fall 2021 projects.  Amended by various teaching staff in subsequent years. Amended for this project by George Hugh.
 
-## Create Run-time Environments
+## Create Developmental/Run-time Environments
 
-The environments for this web application are contained in Docker instancea. Docker instance are virtual machines that runs on your PC. These virtual machines are actually 'images' that are pre-loaded with the software needed to run Python code and interact with databases. The other method would be to load database servers and clients on your PC. Using the Docker instance(s) obviates the need for software bloat on your PC.
+The environments for this web application are contained in Docker instances. Docker instances are computer processes that run on your PC. These processes are 'images' that are pre-loaded with the software needed to run the app's Python code and interact with the app's databases. The other method would be to load database servers and clients on your PC. Using the Docker instance(s) obviates the need for software bloat on your PC.
 
-1.  At the top of this repository are two (2) files required to create the a Docker instance, `compose.yml` and `install.sh`. `compose.yml` is used to create the Docker instance(s) containing your run-time environment, while `install.sh` creates the appropriate environment, within the Docker instance, for your web application. 
+All instructions and files needed to create the Docker instances are contained in the docker directory of this repository. Follow the [instructions](docker/README.md) in that repository directory to install and set up your Docker instance.
 
-## Installing the Current Skeleton
+## Code Development
 
-1. One (and only one) team member should fork this repo by clicking
-   the small 'Fork' button at the very top right on GitLab.  It's
-   important that you fork first, because if you clone this repo
-   directly you won't be able to push changes (save your progress)
-   back to this repo (which is owned by the teaching staff).  Name
-   your forked repo as you prefer.
+Visual Studio Code (VS Code) is the recommended IDE for this project, though you are free to use the IDE of your choice. If you choose another IDE you'll want the capabilities of remote development, Linux shell exectution, and Python code development.
 
-   In your newly forked repo, find the blue "Clone" button.  Copy the
-   "Clone with SSH" text.  Add your teammates as members of your
-   project as "Maintainers."  Share the copied text with your
-   teammates so they have access to this repo too.
+Follow these [instructions](https://code.visualstudio.com/) to install VS Code. Start VS Code and install the following extensions (from the left side menus):
 
-   The remaining steps should be carried out by all team members.
+* Remote Development (Microsoft)
+* Python (Microsoft)
 
-2. In your container shell, issue the command `git clone
-   THE_TEXT_YOU_JUST_COPIED` (make sure to replace
-   `THE_TEXT_YOU_JUST_COPIED` with the "Clone with SSH" text).
-   
-3. In your container shell, change into the repository directory and
-   then run `./install.sh`.  This will install a bunch of things, set
-   up an important file called `.flashenv`, and creates a simple
-   PostgreSQL database named `amazon`.
+### Connecting to Docker Container
+
+With the `Remote Development` extension installed in VS Code you can continue development of this application within the Docker container.
+
+Make sure that your Docker containers are running and select the `Open a Remote Window` icon in the bottom left corner of the VS Code window. Select `Attach to Running Container ...` from the dropdown menu of the search box. Select the Ubuntu container.
+
+At this point you can open the git folder located in your `shared` directory. Changes can be committed then synced with your GitHub repository.
 
 ## Running/Stopping the Website
 
-To run your website, in your container shell, go into the repository
-directory and issue the following commands:
+This web app uses `poetry` for dependency management. Use of `poetry` ensures that all Python dependencies are installed in the system. To run your website, open a container shell, go into the repository directory, and issue the following commands:
 ```
 poetry shell
 flask run
 ```
 
-The first command ensures that you are in the correct Python virtual
-environment managed by a tool called `poetry` (you can tell that your
-command-line prompt looks differently --- it would start with the name
-of the environment).  The second command runs the Flask/web server.
-Do NOT run Flask outside the `poetry` environment; you will get
-errors.
+The first command ensures that you have the correct Python modules loaded while the second command runs the web server (Flask). Do NOT run Flask outside the `poetry` environment; you will get errors.
 
-You can now use your laptop's browser to explore the website.
-Depending on your setup, the URL will be different:
+You can now use your laptop's browser to explore the website. Depending on your setup, the URL will be different:
 
-* If you use containers on your own laptop, point your browser to
-  http://localhost:8080/
+* If you use containers on your own laptop, point your browser to http://localhost:8080/
 
-* If you use the Duke OIT container, visit
-  https://cmgr.oit.duke.edu/containers and open the CONTAINER CONTROLS
-  info pane for your CS316 container.  There will be a line specifying
-  a user-specific URL for accessing a Flask app.  Point your browser
-  to that URL.
-
-  - If you are using VSCode to access your Duke OIT container and
-    run/debug your project from there (by following these
-    instructions), then VSCode will do some (SSH port forwarding)
-    magic to make your Flask app also accessible at
-    http://localhost:8080/
-
-To stop your app, type <kbd>CTRL</kbd>-<kbd>C</kbd> in the container
-shell; that will take you back to the command-line prompt, still
-inside the `poetry` environment. If you are all done with this app for
-now, you can type `exit` to get out of the `poetry` environment and
-get back to the normal container shell.
+* To stop your app, type <kbd>CTRL</kbd>-<kbd>C</kbd> in the container shell; that will take you back to the command-line prompt, still inside the `poetry` environment. If you are all done with this app for
+now, you can type `exit` to leave the `poetry` environment and return to the normal container shell.
 
 ## Working with the Database
 
@@ -129,12 +98,7 @@ running `python gen.py`.
   password value you should put in a CSV file, see `db/data/gen.py`
   for example of how to compute the hashed value.
 
+
 ## Note on Hiding Credentials
 
-Use the file `.flaskenv` for passwords/secret keys --- we are talking
-about passwords used to access your database server, for example (not
-user passwords for your website in CSV files for loading sample
-database).  This file is NOT tracked by `git` and it was automatically
-generated when you first ran `./install.sh`.  Don't check it into
-`git` because your credentials would be exposed to everybody on GitLab
-if you are not careful.
+Use the file `.flaskenv` for passwords/secret keys --- we are talking about passwords used to access your database server, for example (not user passwords for your website in CSV files for loading sample database).  This file is NOT tracked by `git` and it was automatically generated when you first ran `./install.sh`.  Don't check it into `git` because your credentials would be exposed to everybody on GitHub if you are not careful.
