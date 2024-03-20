@@ -25,27 +25,27 @@ python -m pip install poetry
 apt-get -qq --yes install postgresql-client libpq-dev
 python -m pip install psycopg2-binary SQLAlchemy
 
-######################################################################
-# XML:
-apt-get -qq --yes install libxml2-dev libxslt1-dev libxml2-utils
-apt-get -qq --yes install libsaxonb-java
-python -m pip install lxml
+# ######################################################################
+# # XML:
+# apt-get -qq --yes install libxml2-dev libxslt1-dev libxml2-utils
+# apt-get -qq --yes install libsaxonb-java
+# python -m pip install lxml
 
-######################################################################
-# RA:
-python -m pip install radb
+# ######################################################################
+# # RA:
+# python -m pip install radb
 
-######################################################################
-# MongoDB client:
-curl -fsSL https://pgp.mongodb.com/server-7.0.asc | \
-   sudo gpg -o /etc/apt/trusted.gpg.d/mongodb-server-7.0.gpg \
-   --dearmor
-echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" > /etc/apt/sources.list.d/mongodb-org-7.0.list
-apt-get -qq --yes update
-apt-get -qq --yes install mongodb-mongosh mongodb-org-tools
-python -m pip install pymongo
+# ######################################################################
+# # MongoDB client:
+# curl -fsSL https://pgp.mongodb.com/server-7.0.asc | \
+#    sudo gpg -o /etc/apt/trusted.gpg.d/mongodb-server-7.0.gpg \
+#    --dearmor
+# echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" > /etc/apt/sources.list.d/mongodb-org-7.0.list
+# apt-get -qq --yes update
+# apt-get -qq --yes install mongodb-mongosh mongodb-org-tools
+# python -m pip install pymongo
 
-######################################################################
-# Spark:
-apt-get -qq --yes install openjdk-8-jdk
-python -m pip install pyspark
+# ######################################################################
+# # Spark:
+# apt-get -qq --yes install openjdk-8-jdk
+# python -m pip install pyspark
