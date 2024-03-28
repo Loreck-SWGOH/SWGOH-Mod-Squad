@@ -27,20 +27,22 @@ Make sure that your Docker containers are running and select the `Open a Remote 
 
 At this point you can open the git folder located in your `shared` directory. Changes can be committed then synced with your GitHub repository.
 
+### Creating the Application Environment
+
+This web app uses `poetry` for dependency management. Use of `poetry` ensures that all Python dependencies are installed in the system. In your container shell, change into the repository directory and
+run ./install.sh.  This will install the application's dependecies, create the all-important .flashenv file, and creates a simple
+PostgreSQL database named `mod_squad`.
+
 Since the Docker container is essentially a separate machine from your PC, you'll want to install the following VS Code extensions (from the left side menus):
 
 * Python (Microsoft)
 
 This may require that you select a Python interpreter.
 
+
 ## Running/Stopping the Website
 
-This web app uses `poetry` for dependency management. Use of `poetry` ensures that all Python dependencies are installed in the system. The first time you run the web application you will probably need to install the application's dependencies. Issue the following commands:
-```
-poetry install
-```
-
-Once your Python dependencies are installed you can run the web application from the poetry shell using:
+To run the web application you will need to be in the `poetry` environment. Issue the following commands to run the application:
 ```
 poetry shell
 flask run
