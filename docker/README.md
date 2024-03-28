@@ -55,6 +55,11 @@ You can manage your containers from the Docker Desktop. Starting and stopping th
   ```
   You will be within what we would call your "course shell."  WARNING: Don't forget the `--login` switch; without it, your environment won't be properly initialized.
 
+  Periodically, you'll need to access your course shell using admin priviledges. In that case use:
+  ```
+  docker compose exec -it -u 0 ubuntu bash --login
+  ```
+
   Once you are in, you can also access your entire course directory on the host through `~/shared/` in your container.  You will have full read-write access.  WARNING: Files outside this directory reside ONLY within your container; unless you back them up in a different way, don't expect them to be around forever!
 
   HINT: When everything is command-line, sometimes it is hard to tell whether you are inside your host shell, your course shell, or even some command-line interface running within your course shell.  Pay attention to the command-line prompt, and make sure you issue the right commands in the right environment.
