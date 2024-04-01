@@ -1,0 +1,2 @@
+/docker/docker/ubuntu/*.sh text eol=lf
+/docker/docker/ubuntu/dotfiles/.* text eol=lf
