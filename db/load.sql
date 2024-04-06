@@ -20,10 +20,10 @@ SELECT pg_catalog.setval('public.campaigns_id_seq',
                          (SELECT MAX(id)+1 FROM Campaigns),
                          false);
 
-\COPY Events FROM 'Events.csv' WITH DELIMITER ',' NULL '' CSV
-SELECT pg_catalog.setval('public.events_id_seq',
-                         (SELECT MAX(id)+1 FROM Events),
-                         false);
+-- \COPY Events FROM 'Events.csv' WITH DELIMITER ',' NULL '' CSV
+-- SELECT pg_catalog.setval('public.events_id_seq',
+--                          (SELECT MAX(id)+1 FROM Events),
+--                          false);
 
 \COPY Products FROM 'Products.csv' WITH DELIMITER ',' NULL '' CSV
 SELECT pg_catalog.setval('public.products_id_seq',
