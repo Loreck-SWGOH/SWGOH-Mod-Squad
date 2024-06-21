@@ -1,6 +1,14 @@
 # SWGOH Mod Squad
 
-This web application is used to help player of Star Wars Galaxy of Heros apply and manage mods on their heros. This application uses the Flask framework coded in Python.
+This web application is used to help player of Star Wars Galaxy of Heros apply and manage mods on teams of characters. This application uses the Flask framework coded in Python.
+
+This document is designed to help the members of the AIM SWGOH guild with modding of the teams. SWGOH id divided into groups of events. Some of these events are always present, some events are guild driven, and other events are started by the game. Within each event category, there are specific events that allow players to interact with other players or the game. Players interact via teams.
+
+Teams in SWGOH are comprised of different characters which can be obtained via shards earned via game play. Characters gain attributes such as speed and health by increasing the type of gear they own.
+
+Along with the gear, characters can increase their attributes via mods. Unlike gear, mods can be added or removed from characters at will. Hence, the use of mods allow players to fine-tune the strengths of their characters.
+
+Unfortunately, there many sources of mod suggestions. Players are often overwhelmed by these choices and this document will try to tabulate some of the more common mod suggestions.
 
 The original code base was created by [Rickard Stureborg](http://www.rickard.stureborg.com) and [Yihao Hu](https://www.linkedin.com/in/yihaoh/) for Duke CPS 316 Fall 2021 projects.  Amended by various teaching staff in subsequent years. Amended for this project by George Hugh.
 
