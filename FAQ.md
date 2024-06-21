@@ -1,4 +1,4 @@
-# Mini Amazon FAQ
+# Mod Squad FAQ
 
 ## Working with the database
 
