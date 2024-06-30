@@ -3,8 +3,8 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
-# Flask files
-.flaskenv
+# Flask environment files
+.env
 
 # User-specific files
 *.rsuser

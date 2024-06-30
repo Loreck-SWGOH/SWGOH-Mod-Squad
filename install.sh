@@ -14,7 +14,7 @@ DB_NAME=mod_squad
 DB_USER=${PGUSER}
 DB_PORT=${PGPORT}
 DB_HOST=${PGHOST}
-DB_PASSWORD=${PGPASSWORD}" > .flaskenv
+DB_PASSWORD=${PGPASSWORD}" > .env
 
 poetry config virtualenvs.in-project true
 poetry install
