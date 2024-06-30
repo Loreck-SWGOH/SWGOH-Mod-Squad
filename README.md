@@ -1,14 +1,14 @@
 # SWGOH Mod Squad
 
-This web application is used to help player of Star Wars Galaxy of Heros apply and manage mods on teams of characters. This application uses the Flask framework coded in Python.
+This web application is used to help players of Star Wars Galaxy of Heros (SWGOH) apply and manage mods on teams of characters. Players who are only interested in applying mods to their characters can use the static web site located [here](https://loreck-swgoh.github.io/SWGOH-Mod-Squad/). If you are interested in doing more you install the web app using the below instructions.
 
-This document is designed to help the members of the AIM SWGOH guild with modding of the teams. SWGOH id divided into groups of events. Some of these events are always present, some events are guild driven, and other events are started by the game. Within each event category, there are specific events that allow players to interact with other players or the game. Players interact via teams.
+This application uses the Flask framework coded in Python to track the typical mods applied to characters in SWGOH. SWGOH is divided into groups of events. Some of these events are always present, some events are guild driven, and other events are started by the game. Within each event category, there are specific events that allow players to interact with other players or the game. Players interact via teams.
 
 Teams in SWGOH are comprised of different characters which can be obtained via shards earned via game play. Characters gain attributes such as speed and health by increasing the type of gear they own.
 
 Along with the gear, characters can increase their attributes via mods. Unlike gear, mods can be added or removed from characters at will. Hence, the use of mods allow players to fine-tune the strengths of their characters.
 
-Unfortunately, there many sources of mod suggestions. Players are often overwhelmed by these choices and this document will try to tabulate some of the more common mod suggestions.
+Unfortunately, there many sources of mod suggestions. Players are often overwhelmed by these choices and this application will try to tabulate some of the more common mod suggestions.
 
 The original code base was created by [Rickard Stureborg](http://www.rickard.stureborg.com) and [Yihao Hu](https://www.linkedin.com/in/yihaoh/) for Duke CPS 316 Fall 2021 projects.  Amended by various teaching staff in subsequent years. Amended for this project by George Hugh.
 
@@ -38,7 +38,7 @@ At this point you can open the git folder located in your `shared` directory. Ch
 ### Creating the Application Environment
 
 This web app uses `poetry` for dependency management. Use of `poetry` ensures that all Python dependencies are installed in the system. In your container shell, change into the repository directory and
-run ./install.sh.  This will install the application's dependecies, create the all-important .flashenv file, and creates a simple
+run ./install.sh.  This will install the application's dependecies, create the all-important .env file, and creates a simple
 PostgreSQL database named `mod_squad`.
 
 Since the Docker container is essentially a separate machine from your PC, you'll want to install the following VS Code extensions (from the left side menus):
