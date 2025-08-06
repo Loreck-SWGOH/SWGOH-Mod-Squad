@@ -7,6 +7,7 @@ from app import create_app
 app = create_app()
 
 app.config['FREEZER_DESTINATION'] = "../docs"
+app.config["FREEZER_BASE_URL"] = "https://loreck-swgoh.github.io/SWGOH-Mod-Squad/"
 
 freezer = Freezer(app)
 freezer.freeze()

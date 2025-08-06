@@ -14,7 +14,7 @@
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"> -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.js"></script> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="/static/css/example.css">
+    <link rel="stylesheet" href="/SWGOH-Mod-Squad/static/css/example.css">
     <style>
         body {
             font-family: "Lato", sans-serif;
@@ -58,13 +58,13 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-dark border-bottom border-body" data-bs-theme="dark">
       <div class="container-fluid">
-          <a class="navbar-brand" href="/">SWGOH Mod Squad Recommender</a>
+          <a class="navbar-brand" href="/SWGOH-Mod-Squad/">SWGOH Mod Squad Recommender</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbar-collapsed">
               <div class="navbar-nav mc-auto">
-                  <a class="nav-link" href="/"><i class="fa fa-home"></i>&nbsp;Home</a>
+                  <a class="nav-link" href="/SWGOH-Mod-Squad/"><i class="fa fa-home"></i>&nbsp;Home</a>
                   <div class="dropdown">
                       <a href="#" data-bs-toggle="dropdown" class="nav-link dropdown-toggle" data-bs-display="static">Teams</a>
                       <div class="dropdown-menu">
@@ -84,8 +84,8 @@
               </div>
               <div class="navbar-nav ms-auto">
                 
-                    <a class="nav-link" href="/register" type="button" class="btn btn-light"><i class="fa-solid fa-user-plus"></i>&nbsp;Register</a>
-                    <a class="nav-link" href="/login" type="button" class="btn btn-light"><i class="fa-solid fa-right-to-bracket"></i>&nbsp;Log In</a>
+                    <a class="nav-link" href="/SWGOH-Mod-Squad/register" type="button" class="btn btn-light"><i class="fa-solid fa-user-plus"></i>&nbsp;Register</a>
+                    <a class="nav-link" href="/SWGOH-Mod-Squad/login" type="button" class="btn btn-light"><i class="fa-solid fa-right-to-bracket"></i>&nbsp;Log In</a>
                 
               </div>
           </div>
@@ -105,8 +105,8 @@
     <h2>Register</h2>
 
     <form action="" method="post" novalidate>
-        <input id="csrf_token" name="csrf_token" type="hidden" value="IjRmZWQ0MDVjMzI3OGJiMmZkMjNmNTAwMmM4MWNiYzkzYzAzMzE3Mjki.ZoApAQ.Q8Qaum6dOswdloTEYq3RjbSsgQM">
-        <input id="csrf_token" name="csrf_token" type="hidden" value="IjRmZWQ0MDVjMzI3OGJiMmZkMjNmNTAwMmM4MWNiYzkzYzAzMzE3Mjki.ZoApAQ.Q8Qaum6dOswdloTEYq3RjbSsgQM">
+        <input id="csrf_token" name="csrf_token" type="hidden" value="ImNiNmNjMzM3MzcxNDA1MTkyMWVjNWExMzE5ZmIxOTU0YjQ1Mzk1Nzgi.ZoKTgg.C1GfsgFlJJfnhG4G9S-eppkuBFE">
+        <input id="csrf_token" name="csrf_token" type="hidden" value="ImNiNmNjMzM3MzcxNDA1MTkyMWVjNWExMzE5ZmIxOTU0YjQ1Mzk1Nzgi.ZoKTgg.C1GfsgFlJJfnhG4G9S-eppkuBFE">
 
         <div class="form-group">
             <div class="row mb-3">

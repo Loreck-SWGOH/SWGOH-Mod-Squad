@@ -3,25 +3,25 @@
 {% block content %}
 
     <h2>Products for sale:</h2>
-        <br />
-        <table class='table table-striped table-bordered container'>
-            <thead class="table-dark">
-                <tr>
-                    <th scope="col">Product ID</th>
-                    <th scope="col">Product Name</th>
-                    <th scope="col">Price</th>
-                </tr>
-            </thead>
-            <tbody>
-              {% for product in avail_products %}
-                  <tr>
-                      <th scope="row">{{product.id}}</th>
-                      <td>{{product.name}}</td>
-                      <td>{{product.price}}</td>
-                  </tr>
-              {% endfor %}
-            </tbody>
-        </table>
+    <br />
+    <table class='table table-striped table-bordered container'>
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">Product ID</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Price</th>
+            </tr>
+        </thead>
+        <tbody>
+          {% for product in avail_products %}
+            <tr>
+                <th scope="row">{{product.id}}</th>
+                <td>{{product.name}}</td>
+                <td>{{product.price}}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+    </table>
 
     <br /><br />
 
@@ -38,11 +38,11 @@
             </thead>
             <tbody>
               {% for purchase in purchase_history%}
-                  <tr>
-                      <th scope="row">{{purchase.id}}</th>
-                      <td>{{purchase.pid}}</td>
-                      <td>{{purchase.time_purchased}}</td>
-                  </tr>
+                <tr>
+                    <th scope="row">{{purchase.id}}</th>
+                    <td>{{purchase.pid}}</td>
+                    <td>{{purchase.time_purchased}}</td>
+                </tr>
               {% endfor %}
             </tbody>
         </table>

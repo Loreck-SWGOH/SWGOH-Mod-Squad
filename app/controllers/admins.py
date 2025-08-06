@@ -22,7 +22,7 @@ Forms and routes for administrating the web app
 """
 
 
-@bp.route('/admin', methods=['GET', 'POST'])
+@bp.route('/admin/', methods=['GET', 'POST'])
 @login_required
 def home():
     """
